@@ -1,0 +1,11 @@
+.gameButton {
+	display: inline-block;
+	border: 1px solid red;
+	margin-top: 1%;
+	margin-bottom: 2%;
+	margin-left: 3%;
+	width: 20%;
+	height: 5vh;
+	text-align: center;
+	vertical-align: middle;
+}

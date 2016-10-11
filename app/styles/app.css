@@ -1,0 +1,18 @@
+#content {
+  margin: 0 auto;
+}
+
+#gameHeader {
+	height: 10vh;
+	border: 1px solid red;
+}
+
+#gameText {
+	height: 55vh;
+	border: 1px solid red;
+}
+
+#gameButtons {
+	height: 14.5vh;
+	border: 1px solid red;
+}
