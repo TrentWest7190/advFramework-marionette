@@ -22,8 +22,9 @@ export default Marionette.View.extend({
 	},
 
 	onRender: function() {
+		console.log(this.model.get("text"));
 		this.showChildView('headerRegion', new GameHeaderView());
-		this.showChildView('textRegion', new GameTextView());
+		this.showChildView('textRegion', new GameTextView({model:this.model}));
 		this.showChildView('buttonRegion', new GameButtonsView());
 	}
 	
