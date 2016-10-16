@@ -7,8 +7,10 @@ export default Marionette.Application.extend({
 
   initialize() {
     this.on('start', () => {
-      var TextData = new TextModel({"text" : "this is a test string"});
-      this.showView(new AppView({model:TextData}));
+      var TextData = {"text" : "this is a test saoefijasoifej"};
+      var ButtonData = [{"id" : "1", "text": "button 1", "changeTo":"time to go to bed"},
+      					{"id" : "2", "text": "good button", "changeTo":"fart fart fart fart asfjioefj"}];
+      this.showView(new AppView({textObject:TextData, buttonObject:ButtonData}));
     })
   },
 

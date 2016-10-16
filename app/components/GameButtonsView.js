@@ -1,15 +1,22 @@
 import Marionette from 'backbone.marionette';
 import template from 'templates/gameButtons';
+import SingleButtonView from './SingleButtonView';
 
-export default Marionette.View.extend({
+export default Marionette.CollectionView.extend({
 
-	buttonEvent : function(event) {
-		alert("test success");
+	childView: SingleButtonView,
+
+	childViewTriggers: {
+		'button:clicked': 'child:button:clicked'
 	},
 
-	triggers : {
-		'click .gameButton': 'button:pressed'
+	onChildButtonClicked: function(textToChange) {
+		console.log(textToChange);
 	},
 
-	template: template
+	template: template,
+
+	onRender: function() {
+		console.log(this.collection);
+	}
 });

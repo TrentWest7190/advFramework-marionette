@@ -2,7 +2,9 @@ import Marionette from 'backbone.marionette';
 import template from 'templates/app';
 import GameHeaderView from './GameHeaderView';
 import GameTextView from './GameTextView';
-import GameButtonsView from './GameButtonsView'
+import GameButtonsView from './GameButtonsView';
+import TextModel from './TextModel';
+import ButtonCollection from './ButtonCollection';
 
 export default Marionette.View.extend({
 	template: template,
@@ -14,18 +16,23 @@ export default Marionette.View.extend({
 	},
 
 	childViewEvents: {
-		'button:pressed': 'itemSelected'
+		'child:button:clicked': 'itemSelected'
 	},
 
-	itemSelected: function(childView) {
-		console.log(childView);
+	itemSelected: function(textChange) {
+		var textRegion = this.getChildView('textRegion');
+		textRegion.updateText(textChange);
 	},
 
 	onRender: function() {
-		console.log(this.model.get("text"));
+		var textModel = new TextModel(this.getOption("textObject"));
+		var gameTextView = new GameTextView({model: textModel});
+
+		var buttonCollection = new ButtonCollection(this.getOption("buttonObject"));
+		var gameButtonsView = new GameButtonsView({collection: buttonCollection});
 		this.showChildView('headerRegion', new GameHeaderView());
-		this.showChildView('textRegion', new GameTextView({model:this.model}));
-		this.showChildView('buttonRegion', new GameButtonsView());
+		this.showChildView('textRegion', gameTextView);
+		this.showChildView('buttonRegion', gameButtonsView);
 	}
 	
 });
