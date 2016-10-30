@@ -1,0 +1,1 @@
+make buttons able to have more than 1 action

@@ -9,6 +9,6 @@ export default Marionette.View.extend({
 	},
 
 	onButtonClick: function() {
-		this.trigger('button:clicked', this.model.get("changeTo"));
+		this.trigger('button:clicked', this.model);
 	}
 });

@@ -1,5 +1,6 @@
 import Marionette from 'backbone.marionette';
 import template from 'templates/gameText';
+import Backbone from 'backbone';
 
 export default Marionette.View.extend({
 	template: template,
@@ -10,9 +11,5 @@ export default Marionette.View.extend({
 
 	modelEvents: {
         "change": "render"
-    },
-
-	onRender: function() {
-		console.log(this.model);
-	}
+    }
 });

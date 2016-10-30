@@ -10,13 +10,15 @@ export default Marionette.CollectionView.extend({
 		'button:clicked': 'child:button:clicked'
 	},
 
-	onChildButtonClicked: function(textToChange) {
-		console.log(textToChange);
+	loadButtons: function(buttonsToLoad) {
+		console.log("Loading buttons", buttonsToLoad);
+		this.collection.reset(buttonsToLoad);
 	},
 
-	template: template,
+	addButton: function(button) {
+		console.log(button);
+		this.collection.add(button);
+	},
 
-	onRender: function() {
-		console.log(this.collection);
-	}
+	template: template
 });
