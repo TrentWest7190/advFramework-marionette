@@ -117,11 +117,11 @@ const RawData_Flag =
 {
 	"flagName" : "testFlag",
 	"type" : "boolean",
-	"default" : false
+	"defaultValue" : false
 },
 {
 	"flagName" : "testCounter",
 	"type" : "counter",
-	"default" : 10
+	"defaultValue" : 10
 }
 ];

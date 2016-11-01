@@ -82,6 +82,8 @@ export default Marionette.View.extend({
 		var condition = buttonLogic.condition;
 		var value = buttonLogic.value;
 
+		console.log("flag is ", flag);
+
 		switch(condition) {
 			case "is":
 				if (flag == value) {
@@ -119,6 +121,12 @@ export default Marionette.View.extend({
 	},
 
 	defaultFlag: function(flag) {
+		
+		var flagName = flag.get("flagName");
+		var defaultValue = flag.get("defaultValue");
+
+		console.log("Defaulting flag", flagName, "to", defaultValue);
+		this.game_PlayerInfo.set(flagName, defaultValue);
 	},
 
 	findBy: function(searchValue, matcher) {
@@ -134,6 +142,8 @@ export default Marionette.View.extend({
 		this.game_FlagCollection = this.getOption("flagCollection");
 
 		this.game_PlayerInfo = new PlayerModel();
+
+		this.game_FlagCollection.each(this.defaultFlag, this);
 
 		this.getRegion('headerRegion').show(new GameHeaderView());
 
