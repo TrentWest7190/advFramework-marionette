@@ -19,20 +19,22 @@ const RawData_Button =
 {
 	"id" : 1,
 	"text" : "go forward",
-	"action" : "loadScreen",
-	"target" : 2
+	"action" : { "type" : "loadScreen",
+				 "target" : 2 }
 },
 {
 	"id" : 2,
 	"text" : "go back",
-	"action" : "loadScreen",
-	"target" : 1
+	"action" : { "type" : "loadScreen",
+				 "target" : 1 }
 },
 {
 	"id" : 3,
 	"text" : "activate flag",
-	"action" :"setFlag",
-	"target" : "testFlag"
+	"action" : { "type" : "setFlag",
+				 "target" : "testFlag",
+				 "operation" : "setValue",
+				 "value" : true }
 },
 {
 	"id" : 4,
@@ -53,8 +55,16 @@ const RawData_Button =
 {
 	"id" : 8,
 	"text" : "3rd screen",
-	"action" : "loadScreen",
-	"target" : 3
+	"action" : { "type" : "loadScreen",
+				 "target" : 3 }
+},
+{
+	"id" : 9,
+	"text" : "increase counter by 1",
+	"action" : { "type" : "setFlag",
+				 "target" : "testCounter",
+				 "operation" : "add",
+				 "value" : 1 }
 }
 ];
 
@@ -107,7 +117,8 @@ const RawData_Screen =
 					 	"condition" : "greaterThan",
 					 	"value" : 10
 					 }
-					}
+					},
+					{"id" : 9}
 				]
 }
 ];
@@ -116,12 +127,10 @@ const RawData_Flag =
 [
 {
 	"flagName" : "testFlag",
-	"type" : "boolean",
 	"defaultValue" : false
 },
 {
 	"flagName" : "testCounter",
-	"type" : "counter",
 	"defaultValue" : 10
 }
 ];

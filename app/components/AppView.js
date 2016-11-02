@@ -21,17 +21,18 @@ export default Marionette.View.extend({
 	},
 
 	itemSelected: function(buttonPressed) {
-		console.log("Pressed Button", buttonPressed);
+		console.log("Pressed Button", buttonPressed.get("id"), buttonPressed);
 
 		
 		var action = buttonPressed.get("action");
+		console.log(action.type);
 
-		if (action == "loadScreen") {
-			var screenLocal = this.game_ScreenCollection.find(this.findBy("id", buttonPressed.get("target")));
+		if (action.type == "loadScreen") {
+			var screenLocal = this.game_ScreenCollection.find(this.findBy("id", action.target));
 			this.loadScreen(screenLocal);
-		} else if (action == "setFlag") {
-			var flagToSet = this.game_FlagCollection.find(this.findBy("flagName", buttonPressed.get("target")));
-			this.setFlag(flagToSet);
+		} else if (action.type == "setFlag") {
+			this.game_PlayerInfo.updateFlag(action.target, action.operation, action.value);
+			this.getChildView('buttonRegion').render();
 		}
 	},
 
@@ -57,10 +58,9 @@ export default Marionette.View.extend({
 		for (var buttonIndex in buttonArray) {
 			var wrkButton = buttonArray[buttonIndex];
 			var buttonId = wrkButton.id;
-			if (typeof wrkButton.conditional == "undefined" || this.checkButtonLogic(wrkButton.conditional)) {
-				var singleButton = this.game_ButtonCollection.find(this.findBy("id", buttonId));
-				activatedButtons.push(singleButton);
-			}
+			var singleButton = this.game_ButtonCollection.find(this.findBy("id", buttonId));
+			singleButton.set("conditional", wrkButton.conditional);
+			activatedButtons.push(singleButton);
 			
 			
 		}
@@ -68,65 +68,13 @@ export default Marionette.View.extend({
 
 		if (!this.getRegion('buttonRegion').hasView()) {
 			var buttonCollection = new ButtonCollection(activatedButtons);
-			var newGameButtonsView = new GameButtonsView({collection: buttonCollection});
+			var newGameButtonsView = new GameButtonsView({collection: new ButtonCollection()});
+			newGameButtonsView.loadButtons(activatedButtons, this.game_PlayerInfo);
 			this.getRegion('buttonRegion').show(newGameButtonsView);
 		} else {
-			this.getChildView('buttonRegion').loadButtons(activatedButtons);
+			this.getChildView('buttonRegion').loadButtons(activatedButtons, this.game_PlayerInfo);
 		}
 
-	},
-
-	checkButtonLogic: function(buttonLogic) {
-		console.log("Checking button logic", buttonLogic);
-		var flag = this.game_PlayerInfo.get(buttonLogic.flag);
-		var condition = buttonLogic.condition;
-		var value = buttonLogic.value;
-
-		console.log("flag is ", flag);
-
-		switch(condition) {
-			case "is":
-				if (flag == value) {
-					return true;
-				}
-				break;
-			case "greaterThan":
-				if (flag > value) {
-					return true;
-				}
-				break;
-			case "lessThan":
-				if (flag < value) {
-					return true;
-				}
-				break;
-		}
-		return false;
-
-	},
-
-	setFlag: function(flagObject) {
-		var flagType = flagObject.get("type");
-		var flagName = flagObject.get("flagName");
-
-		if (!this.game_PlayerInfo.has(flagName)) {
-			var flagDefault = flagObject.get("default");
-			this.game_PlayerInfo.set(flagName, flagDefault);
-		}
-
-		if (flagType == "boolean") {
-			this.game_PlayerInfo.set(flagName, !this.game_PlayerInfo.get(flagName));
-		}
-
-	},
-
-	defaultFlag: function(flag) {
-		
-		var flagName = flag.get("flagName");
-		var defaultValue = flag.get("defaultValue");
-
-		console.log("Defaulting flag", flagName, "to", defaultValue);
-		this.game_PlayerInfo.set(flagName, defaultValue);
 	},
 
 	findBy: function(searchValue, matcher) {
@@ -141,18 +89,13 @@ export default Marionette.View.extend({
 		this.game_ScreenCollection = this.getOption("screenCollection");
 		this.game_FlagCollection = this.getOption("flagCollection");
 
-		this.game_PlayerInfo = new PlayerModel();
-
-		this.game_FlagCollection.each(this.defaultFlag, this);
+		this.game_PlayerInfo = new PlayerModel({}, {flagObject: this.game_FlagCollection});
 
 		this.getRegion('headerRegion').show(new GameHeaderView());
 
 
-		var firstScreen = this.game_ScreenCollection.find(this.findBy("id", 1));
+		var firstScreen = this.game_ScreenCollection.find(this.findBy("id", 3));
 		this.loadScreen(firstScreen);
-
-
-		
 	}
 	
 });
