@@ -4,6 +4,8 @@ import SingleButtonView from './SingleButtonView';
 
 export default Marionette.CollectionView.extend({
 
+	id: "gameButtonsInner",
+
 	childView: SingleButtonView,
 
 	childViewTriggers: {

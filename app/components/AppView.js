@@ -11,9 +11,9 @@ export default Marionette.View.extend({
 	template: template,
 
 	regions: {
-		headerRegion: '#gameHeader',
-		textRegion: '#gameText',
-		buttonRegion: '#gameButtons'
+		headerRegion: '#gameHeaderOuter',
+		textRegion: '#gameTextOuter',
+		buttonRegion: '#gameButtonsOuter'
 	},
 
 	childViewEvents: {

@@ -2,7 +2,9 @@ import Marionette from 'backbone.marionette';
 import template from 'templates/singleButton';
 
 export default Marionette.View.extend({
-	template:template,
+	tagName: "button",
+	className: "gameButton",
+	template: template,
 
 	events: {
 		'click': 'onButtonClick'

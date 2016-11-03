@@ -2,17 +2,30 @@
   margin: 0 auto;
 }
 
-#gameHeader {
+#gameHeaderOuter {
 	height: 10vh;
 	border: 1px solid red;
 }
 
-#gameText {
+#gameTextOuter {
 	height: 55vh;
 	border: 1px solid red;
 }
 
-#gameButtons {
+#gameButtonsOuter {
 	height: 14.5vh;
 	border: 1px solid red;
+}
+
+#gameButtonsInner {
+	height: 100%;
+}
+
+.gameButton {
+	width: 25%;
+	height: 50%;
+	text-align: center;
+	border: 1px solid white;
+	float: left;
+	outline: none;
 }

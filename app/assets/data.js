@@ -65,6 +65,14 @@ const RawData_Button =
 				 "target" : "testCounter",
 				 "operation" : "add",
 				 "value" : 1 }
+},
+{
+	"id" : 10,
+	"text" : "descrease counter by 1",
+	"action" : { "type" : "setFlag",
+				 "target" : "testCounter",
+				 "operation" : "minus",
+				 "value" : 1 }
 }
 ];
 
@@ -118,7 +126,8 @@ const RawData_Screen =
 					 	"value" : 10
 					 }
 					},
-					{"id" : 9}
+					{"id" : 9},
+					{"id" : 10}
 				]
 }
 ];
