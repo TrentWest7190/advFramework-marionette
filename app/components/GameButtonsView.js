@@ -25,7 +25,8 @@ export default Marionette.CollectionView.extend({
 
 	filter: function(button, index, collection) {
 		var logic = button.get("conditional");
-		return typeof logic == "undefined" ? true : this.checkButtonLogic(logic);
+
+		return typeof logic == "undefined" ? true : logic.every(this.checkButtonLogic, this);
 	},
 
 	checkButtonLogic: function(buttonLogic) {

@@ -25,15 +25,15 @@ export default Marionette.View.extend({
 
 		
 		var action = buttonPressed.get("action");
-		console.log(action.type);
-
-		if (action.type == "loadScreen") {
-			var screenLocal = this.game_ScreenCollection.find(this.findBy("id", action.target));
-			this.loadScreen(screenLocal);
-		} else if (action.type == "setFlag") {
-			this.game_PlayerInfo.updateFlag(action.target, action.operation, action.value);
-			this.getChildView('buttonRegion').render();
-		}
+		action.forEach(function(subAction) {
+						if (subAction.type == "loadScreen") {
+							var screenLocal = this.game_ScreenCollection.find(this.findBy("id", subAction.target));
+							this.loadScreen(screenLocal);
+						} else if (subAction.type == "setFlag") {
+							this.game_PlayerInfo.updateFlag(subAction.target, subAction.operation, subAction.value);
+							this.getChildView('buttonRegion').render();
+						}
+					}, this);
 	},
 
 	loadScreen: function(screenObj) {

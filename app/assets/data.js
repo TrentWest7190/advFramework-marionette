@@ -19,22 +19,22 @@ const RawData_Button =
 {
 	"id" : 1,
 	"text" : "go forward",
-	"action" : { "type" : "loadScreen",
-				 "target" : 2 }
+	"action" : [{ "type" : "loadScreen",
+				 "target" : 2 }]
 },
 {
 	"id" : 2,
 	"text" : "go back",
-	"action" : { "type" : "loadScreen",
-				 "target" : 1 }
+	"action" : [{ "type" : "loadScreen",
+				 "target" : 1 }]
 },
 {
 	"id" : 3,
 	"text" : "activate flag",
-	"action" : { "type" : "setFlag",
+	"action" : [{ "type" : "setFlag",
 				 "target" : "testFlag",
 				 "operation" : "setValue",
-				 "value" : true }
+				 "value" : true }]
 },
 {
 	"id" : 4,
@@ -55,24 +55,24 @@ const RawData_Button =
 {
 	"id" : 8,
 	"text" : "3rd screen",
-	"action" : { "type" : "loadScreen",
-				 "target" : 3 }
+	"action" : [{ "type" : "loadScreen",
+				 "target" : 3 }]
 },
 {
 	"id" : 9,
 	"text" : "increase counter by 1",
-	"action" : { "type" : "setFlag",
+	"action" : [{ "type" : "setFlag",
 				 "target" : "testCounter",
 				 "operation" : "add",
-				 "value" : 1 }
+				 "value" : 1 }]
 },
 {
 	"id" : 10,
 	"text" : "descrease counter by 1",
-	"action" : { "type" : "setFlag",
+	"action" : [{ "type" : "setFlag",
 				 "target" : "testCounter",
 				 "operation" : "minus",
-				 "value" : 1 }
+				 "value" : 1 }]
 }
 ];
 
@@ -106,25 +106,25 @@ const RawData_Screen =
 	"text" : 3,
 	"buttons" : [
 					{"id" : 5,
-					 "conditional" : {
+					 "conditional" : [{
 					 	"flag" : "testCounter",
 					 	"condition" : "is",
 					 	"value" : 10
-					 }
+					 }]
 					},
 					{"id" : 6,
-					 "conditional" : {
+					 "conditional" : [{
 					 	"flag" : "testCounter",
 					 	"condition" : "lessThan",
 					 	"value" : 10
-					 }
+					 }]
 					},
 					{"id" : 7,
-					 "conditional" : {
+					 "conditional" : [{
 					 	"flag" : "testCounter",
 					 	"condition" : "greaterThan",
 					 	"value" : 10
-					 }
+					 }]
 					},
 					{"id" : 9},
 					{"id" : 10}
