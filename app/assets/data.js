@@ -32,9 +32,12 @@ const RawData_Button =
 	"id" : 3,
 	"text" : "activate flag",
 	"action" : [{ "type" : "setFlag",
-				 "target" : "testFlag",
-				 "operation" : "setValue",
-				 "value" : true }]
+				 "target" : { 
+							 	"flagName" : "testFlag",
+								"operation" : "setValue",
+								"value" : true 
+							}
+				}]
 },
 {
 	"id" : 4,
@@ -62,17 +65,23 @@ const RawData_Button =
 	"id" : 9,
 	"text" : "increase counter by 1",
 	"action" : [{ "type" : "setFlag",
-				 "target" : "testCounter",
-				 "operation" : "add",
-				 "value" : 1 }]
+				 "target" : { 
+								"flagName": "testCounter",
+								"operation" : "add",
+								"value" : 1 
+							}
+				}]
 },
 {
 	"id" : 10,
 	"text" : "descrease counter by 1",
 	"action" : [{ "type" : "setFlag",
-				 "target" : "testCounter",
-				 "operation" : "minus",
-				 "value" : 1 }]
+				 "target" : { 
+								"flagName": "testCounter",
+								"operation" : "minus",
+								"value" : 1 
+							}
+				}]
 }
 ];
 
@@ -92,11 +101,11 @@ const RawData_Screen =
 	"buttons" : [
 					{"id" : 2},
 					{"id" : 4,
-					 "conditional" : {
+					 "conditional" : [{
 					 	"flag" : "testFlag",
 					 	"condition" : "is",
 					 	"value" : true
-					 }
+					 }]
 					},
 					{"id": 8}
 				]

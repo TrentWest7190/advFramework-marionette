@@ -8,6 +8,8 @@ import ButtonCollection from './ButtonCollection';
 import PlayerModel from './PlayerModel';
 
 export default Marionette.View.extend({
+	id: "appInner",
+
 	template: template,
 
 	regions: {
@@ -23,20 +25,23 @@ export default Marionette.View.extend({
 	itemSelected: function(buttonPressed) {
 		console.log("Pressed Button", buttonPressed.get("id"), buttonPressed);
 
-		
 		var action = buttonPressed.get("action");
-		action.forEach(function(subAction) {
-						if (subAction.type == "loadScreen") {
-							var screenLocal = this.game_ScreenCollection.find(this.findBy("id", subAction.target));
-							this.loadScreen(screenLocal);
-						} else if (subAction.type == "setFlag") {
-							this.game_PlayerInfo.updateFlag(subAction.target, subAction.operation, subAction.value);
-							this.getChildView('buttonRegion').render();
-						}
-					}, this);
+		action.forEach(this.performAction, this);
 	},
 
-	loadScreen: function(screenObj) {
+	performAction: function(subAction) {
+		var subActionName = subAction.type;
+		this[subActionName](subAction.target)
+	},
+
+	setFlag: function(flagTarget) {
+		this.game_PlayerInfo.updateFlag(flagTarget.flagName, flagTarget.operation, flagTarget.value);
+		this.getChildView('buttonRegion').render();
+	},
+
+	loadScreen: function(screenId) {
+		var screenObj = this.game_ScreenCollection.find(this.findBy("id", screenId));
+
 		console.log("Loading screen with id", screenObj.get("id"));
 
 		//Load text into view
@@ -93,9 +98,7 @@ export default Marionette.View.extend({
 
 		this.getRegion('headerRegion').show(new GameHeaderView());
 
-
-		var firstScreen = this.game_ScreenCollection.find(this.findBy("id", 3));
-		this.loadScreen(firstScreen);
+		this.loadScreen(1);
 	}
 	
 });

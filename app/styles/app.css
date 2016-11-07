@@ -1,3 +1,15 @@
+* {
+	box-sizing:  border-box;
+}
+
+#appInner > div {
+	float: left;
+}
+
+#leftAppDiv {
+	width: 75%;
+}
+
 #content {
   margin: 0 auto;
 }
@@ -19,6 +31,15 @@
 
 #gameButtonsInner {
 	height: 100%;
+}
+
+#gameInventoryOuter {
+    font-family: 'Roboto Mono';
+	width: 25%;
+	height: 80vh;
+	float: left;
+	padding: 10px;
+	border: 1px solid red;
 }
 
 .gameButton {
