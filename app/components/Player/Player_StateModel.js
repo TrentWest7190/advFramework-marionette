@@ -1,9 +1,13 @@
 /**
- * This model will hold all of the player's current relevant information
+ * This model contains 2 values:
+ * 1) "flags" - a model consisting of key-value pairs that represent the game's current state
+ * 2) "inventory" - a collection of inventoryObject models that represent the player's current inventory
  */
 import Marionette from 'backbone.marionette';
 import Backbone from 'backbone';
-import PlayerInventoryCollection from './PlayerInventoryCollection';
+import _ from 'underscore';
+import PlayerInventoryCollection from './Player_InventoryCollection';
+
 
 export default Backbone.Model.extend({
 
@@ -33,19 +37,12 @@ export default Backbone.Model.extend({
 		console.log("Updated flag", target, "to value", this.get(target));
 	},
 
-	defaultFlag: function(flag) {
-		var flagName = flag.get("flagName");
-		var defaultValue = flag.get("defaultValue");
-
-		console.log("Defaulting flag", flagName, "to", defaultValue);
-		this.set(flagName, defaultValue);
-	},
-
-	initialize: function(attributes, object) {
-		this.flagCollection = object.flagObject;
-		this.inventoryCollection = object.inventoryObject;
-
-		this.flagCollection.each(this.defaultFlag, this);
-		this.inventoryCollection.each(this.)
+	constructor: function(flagData) {
+		//Flatten flag array into a single object with defaulted values
+		var defaultFlagObject = _.reduce(flagData, function(memo, value, index, list) {
+			memo[value.flagName] = value.defaultValue
+			return memo;
+		}, {});
+		Backbone.Model.apply(this, [defaultFlagObject]);
 	}
 });

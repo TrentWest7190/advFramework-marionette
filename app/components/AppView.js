@@ -1,13 +1,6 @@
 import Marionette from 'backbone.marionette';
 import template from 'templates/app';
-import GameHeaderView from './GameHeaderView';
-import GameTextView from './GameTextView';
-import GameButtonsView from './GameButtonsView';
-import GameInventoryView from './GameInventoryView';
-import TextModel from './TextModel';
-import ButtonCollection from './ButtonCollection';
-import PlayerModel from './PlayerModel';
-import PlayerInventoryCollection from './PlayerInventoryCollection';
+import Player_StateModel from './Player/Player_StateModel'
 
 export default Marionette.View.extend({
 	id: "appInner",
@@ -102,17 +95,17 @@ export default Marionette.View.extend({
 	},
 
 	onRender: function() {
-		this.game_TextCollection = this.getOption("textCollection");
-		this.game_ButtonCollection = this.getOption("buttonCollection");
-		this.game_ScreenCollection = this.getOption("screenCollection");
-		this.game_FlagCollection = this.getOption("flagCollection");
-		this.game_InventoryCollection = this.getOption("inventoryCollection");
+		this.MetaData_Text = this.getOption("MetaData_Text");
+		this.MetaData_Button = this.getOption("MetaData_Button");
+		this.MetaData_Screen = this.getOption("MetaData_Screen");
+		this.MetaData_Flag = this.getOption("MetaData_Flag");
+		this.MetaData_Inventory = this.getOption("MetaData_Inventory");
 
-		this.game_PlayerInfo = new PlayerModel({}, {flagObject: this.game_FlagCollection});
+		this.game_PlayerState = new Player_StateModel(this.MetaData_Flag);
 
-		this.getRegion('headerRegion').show(new GameHeaderView());
+		//this.getRegion('headerRegion').show(new GameHeaderView());
 
-		this.loadScreen(4);
+		//this.loadScreen(4);
 	}
 	
 });
