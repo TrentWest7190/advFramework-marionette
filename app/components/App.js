@@ -5,6 +5,7 @@ import GameTextCollection from 'components/GameTextCollection';
 import GameButtonCollection from 'components/GameButtonCollection';
 import GameScreenCollection from 'components/GameScreenCollection';
 import GameFlagCollection from 'components/GameFlagCollection';
+import GameInventoryCollection from 'components/GameInventoryCollection';
 
 
 export default Marionette.Application.extend({
@@ -16,11 +17,13 @@ export default Marionette.Application.extend({
 	  var gameButtonCollection = new GameButtonCollection(RawData_Button);
 	  var gameScreenCollection = new GameScreenCollection(RawData_Screen);
     var gameFlagCollection = new GameFlagCollection(RawData_Flag);
+    var gameInventoryCollection = new GameInventoryCollection(RawData_Inventory);
 
       this.showView(new AppView({textCollection:gameTextCollection, 
       							 buttonCollection:gameButtonCollection, 
       							 screenCollection:gameScreenCollection,
-                     flagCollection: gameFlagCollection}));
+                     flagCollection: gameFlagCollection,
+                     inventoryCollection: gameInventoryCollection}));
     })
   }
 

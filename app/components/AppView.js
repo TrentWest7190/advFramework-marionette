@@ -3,9 +3,11 @@ import template from 'templates/app';
 import GameHeaderView from './GameHeaderView';
 import GameTextView from './GameTextView';
 import GameButtonsView from './GameButtonsView';
+import GameInventoryView from './GameInventoryView';
 import TextModel from './TextModel';
 import ButtonCollection from './ButtonCollection';
 import PlayerModel from './PlayerModel';
+import PlayerInventoryCollection from './PlayerInventoryCollection';
 
 export default Marionette.View.extend({
 	id: "appInner",
@@ -15,7 +17,8 @@ export default Marionette.View.extend({
 	regions: {
 		headerRegion: '#gameHeaderOuter',
 		textRegion: '#gameTextOuter',
-		buttonRegion: '#gameButtonsOuter'
+		buttonRegion: '#gameButtonsOuter',
+		inventoryRegion: '#gameInventoryOuter'
 	},
 
 	childViewEvents: {
@@ -32,6 +35,10 @@ export default Marionette.View.extend({
 	performAction: function(subAction) {
 		var subActionName = subAction.type;
 		this[subActionName](subAction.target)
+	},
+
+	getItem: function(itemTarget) {
+		this.game_PlayerInfo.collect(itemTarget);
 	},
 
 	setFlag: function(flagTarget) {
@@ -80,6 +87,12 @@ export default Marionette.View.extend({
 			this.getChildView('buttonRegion').loadButtons(activatedButtons, this.game_PlayerInfo);
 		}
 
+		if (!this.getRegion('inventoryRegion').hasView()) {
+			var newGameInventoryView = new GameInventoryView({collection: new PlayerInventoryCollection(this.game_PlayerInfo.get("playerInventory"))});
+			this.getRegion('inventoryRegion').show(newGameInventoryView);
+		}
+
+
 	},
 
 	findBy: function(searchValue, matcher) {
@@ -93,12 +106,13 @@ export default Marionette.View.extend({
 		this.game_ButtonCollection = this.getOption("buttonCollection");
 		this.game_ScreenCollection = this.getOption("screenCollection");
 		this.game_FlagCollection = this.getOption("flagCollection");
+		this.game_InventoryCollection = this.getOption("inventoryCollection");
 
 		this.game_PlayerInfo = new PlayerModel({}, {flagObject: this.game_FlagCollection});
 
 		this.getRegion('headerRegion').show(new GameHeaderView());
 
-		this.loadScreen(1);
+		this.loadScreen(4);
 	}
 	
 });

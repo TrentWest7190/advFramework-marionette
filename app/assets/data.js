@@ -11,6 +11,10 @@ const RawData_Text =
 {
 	"id" : 3,
 	"text" : "test screen for counters"
+},
+{
+	"id" : 4,
+	"text" : "inventory test"
 }
 ];
 
@@ -82,6 +86,17 @@ const RawData_Button =
 								"value" : 1 
 							}
 				}]
+},
+{
+	"id" : 11,
+	"text" : "pick up horn",
+	"action" : [{ "type" : "getItem",
+				  "target" : {
+				  				"itemName": "horn",
+				  				"uses" : 1
+				  			 }
+
+				}]
 }
 ];
 
@@ -138,7 +153,14 @@ const RawData_Screen =
 					{"id" : 9},
 					{"id" : 10}
 				]
-}
+},
+{
+	"id" : 4,
+	"text" : 4,
+	"buttons" : [
+					{"id" : 11}
+				]
+},
 ];
 
 const RawData_Flag =
@@ -150,5 +172,17 @@ const RawData_Flag =
 {
 	"flagName" : "testCounter",
 	"defaultValue" : 10
+}
+];
+
+const RawData_Inventory = 
+[
+{
+	"itemName" : "oldKey",
+	"text" : "An old key"
+},
+{
+	"itemName" : "horn",
+	"text" : "A funny horn"
 }
 ];

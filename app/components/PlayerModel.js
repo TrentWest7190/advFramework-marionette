@@ -3,6 +3,7 @@
  */
 import Marionette from 'backbone.marionette';
 import Backbone from 'backbone';
+import PlayerInventoryCollection from './PlayerInventoryCollection';
 
 export default Backbone.Model.extend({
 
@@ -42,7 +43,9 @@ export default Backbone.Model.extend({
 
 	initialize: function(attributes, object) {
 		this.flagCollection = object.flagObject;
+		this.inventoryCollection = object.inventoryObject;
 
 		this.flagCollection.each(this.defaultFlag, this);
+		this.inventoryCollection.each(this.)
 	}
 });
