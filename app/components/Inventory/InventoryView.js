@@ -1,16 +1,12 @@
 import Marionette from 'backbone.marionette';
 import template from 'templates/gameButtons';
-import SingleInventoryView from './SingleInventoryView';
+import ItemView from './ItemView';
 
 export default Marionette.CollectionView.extend({
 
 	id: "gameInventoryInner",
 
-	childView: SingleInventoryView,
+	childView: ItemView,
 
-	//template: template
-
-	initialize: function() {
-		console.log("gameinventory", this);
-	}
+	template: "<div id='biggoodtest'></div>"
 });

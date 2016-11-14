@@ -4,6 +4,7 @@ import Player_StateModel from './Player/Player_StateModel';
 import GameHeaderView from './GameHeaderView';
 import GameTextView from './TextPanel/GameTextView';
 import GameButtonsView from './Buttons/GameButtonsView';
+import InventoryView from './Inventory/InventoryView';
 import _ from 'lodash';
 
 export default Marionette.View.extend({
@@ -36,10 +37,11 @@ export default Marionette.View.extend({
 
 	getItem: function(itemTarget) {
 		this.game_PlayerState.collect(itemTarget);
+		this.getChildView('inventoryRegion').render();
 	},
 
 	setFlag: function(flagTarget) {
-		this.game_PlayerState.get("flags").updateFlag(flagTarget.flagName, flagTarget.operation, flagTarget.value);
+		this.game_PlayerState.updateFlag(flagTarget);
 		this.getChildView('buttonRegion').render();
 	},
 
@@ -84,13 +86,14 @@ export default Marionette.View.extend({
 		this.MetaData_Flag = this.getOption("MetaData_Flag");
 		this.MetaData_Inventory = this.getOption("MetaData_Inventory");
 
-		this.game_PlayerState = new Player_StateModel(this.MetaData_Flag);
+		this.game_PlayerState = new Player_StateModel(this.MetaData_Flag, this.MetaData_Inventory);
 
 		this.getRegion('headerRegion').show(new GameHeaderView());
 		this.getRegion('textRegion').show(new GameTextView());
 		this.getRegion('buttonRegion').show(new GameButtonsView());
+		this.getRegion('inventoryRegion').show(new InventoryView({collection : this.game_PlayerState.get("inventory")}));
 
-		this.loadScreen(1);
+		this.loadScreen(4);
 	}
 	
 });

@@ -93,7 +93,7 @@ const MetaData_Button =
 	"action" : [{ "type" : "getItem",
 				  "target" : {
 				  				"itemName": "horn",
-				  				"uses" : 1
+				  				"number" : 1
 				  			 }
 
 				}]
@@ -179,10 +179,12 @@ const MetaData_Inventory =
 [
 {
 	"itemName" : "oldKey",
-	"text" : "An old key"
+	"text" : "An old key",
+	"uses" : 1
 },
 {
 	"itemName" : "horn",
-	"text" : "A funny horn"
+	"text" : "A funny horn",
+	"uses" : "inf"
 }
 ];

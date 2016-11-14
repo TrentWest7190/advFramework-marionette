@@ -12,32 +12,17 @@ import FlagModel from './Player_FlagModel';
 
 export default Backbone.Model.extend({
 
-	updateFlag: function(target, operation, value) {
-		var oldValue = this.get(target);
-		var that = this;
-
-		var operations = {
-			'setValue': function() {
-				that.set(target, value);
-			},
-			'toggle': function() {
-				if (typeof oldValue === "boolean")
-					that.set(target, !oldValue)
-				else
-					throw "Attempted to toggle flag " + target + ", but that flag is not a Boolean.";
-			},
-			'add' : function() {
-				that.set(target, oldValue + value);
-			},
-			'minus' : function() {
-				that.set(target, oldValue - value);
-			}
-		}
-		operations[operation]();
-
-		console.log("Updated flag", target, "to value", this.get(target));
+	updateFlag: function(flagTarget) {
+		this.get("flags").updateFlag(flagTarget.flagName, flagTarget.operation, flagTarget.value);
 	},
-	constructor: function(flagData) {
+
+	collect: function(itemTarget) {
+		var itemToAdd = _.find(this.MetaData_Inventory, function(item) { return item.itemName == itemTarget.itemName });
+		this.get("inventory").add(itemToAdd);
+		console.log(this.get("inventory"));
+	},
+
+	constructor: function(flagData, inventoryData) {
 		var defaultFlagObject = _.reduce(flagData, function(memo, value, index, list) {
 			memo[value.flagName] = value.defaultValue
 			return memo;
@@ -45,9 +30,9 @@ export default Backbone.Model.extend({
 
 		var defaultFlagModel = new FlagModel(defaultFlagObject);
 
-		var test = [];
+		this.MetaData_Inventory = inventoryData;
 		
-		Backbone.Model.apply(this, [{ "flags" : defaultFlagModel}]);
+		Backbone.Model.apply(this, [{ "flags" : defaultFlagModel, "inventory" : new InventoryCollection()}]);
 	},
 
 	initialize: function() {

@@ -2,7 +2,7 @@ import Marionette from 'backbone.marionette';
 import template from 'templates/singleInventory';
 
 export default Marionette.View.extend({
-	tagName: "button",
-	className: "gameButton",
+	tagName: "span",
+	className: "inventory-item",
 	template: template,
 });
