@@ -1,6 +1,7 @@
 import Marionette from 'backbone.marionette';
 import template from 'templates/gameButtons';
 import SingleButtonView from './SingleButtonView';
+import GameButtonCollection from './GameButtonCollection';
 
 export default Marionette.CollectionView.extend({
 
@@ -30,7 +31,7 @@ export default Marionette.CollectionView.extend({
 	},
 
 	checkButtonLogic: function(buttonLogic) {
-		var flag = this.game_PlayerState.get(buttonLogic.flag);
+		var flag = this.game_PlayerState.get("flags").get(buttonLogic.flag);
 		var condition = buttonLogic.condition;
 		var value = buttonLogic.value;
 
@@ -52,5 +53,11 @@ export default Marionette.CollectionView.extend({
 
 	},
 
-	template: template
+	template: template,
+
+	initialize: function() {
+		if (this.collection == undefined) {
+			this.collection = new GameButtonCollection();
+		}
+	}
 });

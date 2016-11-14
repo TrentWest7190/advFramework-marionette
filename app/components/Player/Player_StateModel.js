@@ -6,7 +6,8 @@
 import Marionette from 'backbone.marionette';
 import Backbone from 'backbone';
 import _ from 'underscore';
-import PlayerInventoryCollection from './Player_InventoryCollection';
+import InventoryCollection from './Player_InventoryCollection';
+import FlagModel from './Player_FlagModel';
 
 
 export default Backbone.Model.extend({
@@ -36,13 +37,20 @@ export default Backbone.Model.extend({
 
 		console.log("Updated flag", target, "to value", this.get(target));
 	},
-
 	constructor: function(flagData) {
-		//Flatten flag array into a single object with defaulted values
 		var defaultFlagObject = _.reduce(flagData, function(memo, value, index, list) {
 			memo[value.flagName] = value.defaultValue
 			return memo;
 		}, {});
-		Backbone.Model.apply(this, [defaultFlagObject]);
+
+		var defaultFlagModel = new FlagModel(defaultFlagObject);
+
+		var test = [];
+		
+		Backbone.Model.apply(this, [{ "flags" : defaultFlagModel}]);
+	},
+
+	initialize: function() {
+		console.log("Created player state model with attributes", this.attributes);
 	}
 });
