@@ -1,4 +1,4 @@
-const RawData_Text = 
+const MetaData_Text = 
 [
 {
 	"id" : 1,
@@ -18,7 +18,7 @@ const RawData_Text =
 }
 ];
 
-const RawData_Button = 
+const MetaData_Button = 
 [
 {
 	"id" : 1,
@@ -100,7 +100,7 @@ const RawData_Button =
 }
 ];
 
-const RawData_Screen = 
+const MetaData_Screen = 
 [
 {
 	"id" : 1,
@@ -163,7 +163,7 @@ const RawData_Screen =
 },
 ];
 
-const RawData_Flag =
+const MetaData_Flag =
 [
 {
 	"flagName" : "testFlag",
@@ -175,7 +175,7 @@ const RawData_Flag =
 }
 ];
 
-const RawData_Inventory = 
+const MetaData_Inventory = 
 [
 {
 	"itemName" : "oldKey",

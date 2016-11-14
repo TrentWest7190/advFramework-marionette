@@ -1,11 +1,5 @@
 import Marionette from 'backbone.marionette';
 import AppView from './AppView';
-import TextModel from './TextModel';
-import GameTextCollection from 'components/GameTextCollection';
-import GameButtonCollection from 'components/GameButtonCollection';
-import GameScreenCollection from 'components/GameScreenCollection';
-import GameFlagCollection from 'components/GameFlagCollection';
-import GameInventoryCollection from 'components/GameInventoryCollection';
 
 
 export default Marionette.Application.extend({
@@ -13,17 +7,15 @@ export default Marionette.Application.extend({
 
   initialize() {
     this.on('start', () => {
-	  var gameTextCollection = new GameTextCollection(RawData_Text);
-	  var gameButtonCollection = new GameButtonCollection(RawData_Button);
-	  var gameScreenCollection = new GameScreenCollection(RawData_Screen);
-    var gameFlagCollection = new GameFlagCollection(RawData_Flag);
-    var gameInventoryCollection = new GameInventoryCollection(RawData_Inventory);
-
-      this.showView(new AppView({textCollection:gameTextCollection, 
-      							 buttonCollection:gameButtonCollection, 
-      							 screenCollection:gameScreenCollection,
-                     flagCollection: gameFlagCollection,
-                     inventoryCollection: gameInventoryCollection}));
+      this.showView(new AppView(
+        {
+          MetaData_Text: MetaData_Text, 
+				  MetaData_Button: MetaData_Button, 
+				  MetaData_Screen: MetaData_Screen,
+          MetaData_Flag: MetaData_Flag,
+          MetaData_Inventory: MetaData_Inventory
+        }
+      ));
     })
   }
 

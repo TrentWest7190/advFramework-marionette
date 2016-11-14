@@ -1,13 +1,10 @@
 import Marionette from 'backbone.marionette';
 import template from 'templates/app';
+import Player_StateModel from './Player/Player_StateModel';
 import GameHeaderView from './GameHeaderView';
-import GameTextView from './GameTextView';
-import GameButtonsView from './GameButtonsView';
-import GameInventoryView from './GameInventoryView';
-import TextModel from './TextModel';
-import ButtonCollection from './ButtonCollection';
-import PlayerModel from './PlayerModel';
-import PlayerInventoryCollection from './PlayerInventoryCollection';
+import GameTextView from './TextPanel/GameTextView';
+import GameButtonsView from './Buttons/GameButtonsView';
+import _ from 'lodash';
 
 export default Marionette.View.extend({
 	id: "appInner",
@@ -38,81 +35,62 @@ export default Marionette.View.extend({
 	},
 
 	getItem: function(itemTarget) {
-		this.game_PlayerInfo.collect(itemTarget);
+		this.game_PlayerState.collect(itemTarget);
 	},
 
 	setFlag: function(flagTarget) {
-		this.game_PlayerInfo.updateFlag(flagTarget.flagName, flagTarget.operation, flagTarget.value);
+		this.game_PlayerState.get("flags").updateFlag(flagTarget.flagName, flagTarget.operation, flagTarget.value);
 		this.getChildView('buttonRegion').render();
 	},
 
 	loadScreen: function(screenId) {
-		var screenObj = this.game_ScreenCollection.find(this.findBy("id", screenId));
+		var screenObj = _.find(this.MetaData_Screen, this.findById(screenId));
 
-		console.log("Loading screen with id", screenObj.get("id"));
+		console.log("Loading screen with id", screenObj.id);
 
 		//Load text into view
-		var textId = screenObj.get("text");
-		var textObject = this.game_TextCollection.find(this.findBy("id", textId));
-		var changeToText = textObject.get("text");
+		var textObject = _.find(this.MetaData_Text, this.findById(screenObj.text));
+		var changeToText = textObject.text;
 
-		if (!this.getRegion('textRegion').hasView()) {
-			var newGameTextModel = new TextModel({text: changeToText});
-			var newGameTextView = new GameTextView({model: newGameTextModel});
-			this.getRegion('textRegion').show(newGameTextView);
-		} else {
-			this.getChildView('textRegion').updateText(changeToText);	
-		}
+		this.getChildView('textRegion').updateText(changeToText);	
 
 		//Load buttons into view
-		var buttonArray = screenObj.get("buttons");
-		var activatedButtons = [];
-		for (var buttonIndex in buttonArray) {
-			var wrkButton = buttonArray[buttonIndex];
-			var buttonId = wrkButton.id;
-			var singleButton = this.game_ButtonCollection.find(this.findBy("id", buttonId));
-			singleButton.set("conditional", wrkButton.conditional);
-			activatedButtons.push(singleButton);
-			
-			
+		var buttonArray = screenObj.buttons;
+		for (var button in buttonArray) {
+			buttonArray[button] = _.merge(buttonArray[button], _.find(this.MetaData_Button, this.findById(buttonArray[button].id)));
 		}
+		console.log(buttonArray);
 
+		this.getChildView('buttonRegion').loadButtons(buttonArray, this.game_PlayerState);
 
-		if (!this.getRegion('buttonRegion').hasView()) {
-			var buttonCollection = new ButtonCollection(activatedButtons);
-			var newGameButtonsView = new GameButtonsView({collection: new ButtonCollection()});
-			newGameButtonsView.loadButtons(activatedButtons, this.game_PlayerInfo);
-			this.getRegion('buttonRegion').show(newGameButtonsView);
-		} else {
-			this.getChildView('buttonRegion').loadButtons(activatedButtons, this.game_PlayerInfo);
-		}
-
-		if (!this.getRegion('inventoryRegion').hasView()) {
-			var newGameInventoryView = new GameInventoryView({collection: new PlayerInventoryCollection(this.game_PlayerInfo.get("playerInventory"))});
+		/*if (!this.getRegion('inventoryRegion').hasView()) {
+			var newGameInventoryView = new GameInventoryView({collection: new PlayerInventoryCollection(this.game_PlayerState.get("playerInventory"))});
 			this.getRegion('inventoryRegion').show(newGameInventoryView);
-		}
+		}*/
 
 
 	},
 
-	findBy: function(searchValue, matcher) {
+	findById: function(matcher) {
 		return function(find) {
-			return find.get(searchValue) == matcher;
+			return find.id == matcher;
 		}
 	},
 
 	onRender: function() {
-		this.game_TextCollection = this.getOption("textCollection");
-		this.game_ButtonCollection = this.getOption("buttonCollection");
-		this.game_ScreenCollection = this.getOption("screenCollection");
-		this.game_FlagCollection = this.getOption("flagCollection");
-		this.game_InventoryCollection = this.getOption("inventoryCollection");
+		this.MetaData_Text = this.getOption("MetaData_Text");
+		this.MetaData_Button = this.getOption("MetaData_Button");
+		this.MetaData_Screen = this.getOption("MetaData_Screen");
+		this.MetaData_Flag = this.getOption("MetaData_Flag");
+		this.MetaData_Inventory = this.getOption("MetaData_Inventory");
 
-		this.game_PlayerInfo = new PlayerModel({}, {flagObject: this.game_FlagCollection});
+		this.game_PlayerState = new Player_StateModel(this.MetaData_Flag);
 
 		this.getRegion('headerRegion').show(new GameHeaderView());
+		this.getRegion('textRegion').show(new GameTextView());
+		this.getRegion('buttonRegion').show(new GameButtonsView());
 
-		this.loadScreen(4);
+		this.loadScreen(1);
 	}
 	
 });
